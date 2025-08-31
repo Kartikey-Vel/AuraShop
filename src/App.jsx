@@ -455,13 +455,14 @@ function App() {
       </main>
 
 
-      {/* Floating Mic Button at bottom center */}
+
+      {/* Floating Mic Button: right on mobile, center on desktop */}
       <button
         type="button"
         onClick={handleMicClick}
         aria-pressed={listening || isListening}
         aria-label="Start voice input"
-        className={`fixed bottom-12 left-1/2 -translate-x-1/2 z-50 inline-flex h-16 w-16 items-center justify-center rounded-full border bg-gradient-to-br from-emerald-50 to-white shadow-lg transition focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:from-slate-800 dark:to-slate-900 dark:border-slate-600 ${
+        className={`fixed bottom-12 left-1/2 -translate-x-1/2 md:left-1/2 md:-translate-x-1/2 sm:left-auto sm:right-6 sm:translate-x-0 z-50 inline-flex h-16 w-16 items-center justify-center rounded-full border bg-gradient-to-br from-emerald-50 to-white shadow-lg transition focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:from-slate-800 dark:to-slate-900 dark:border-slate-600 ${
           listening || isListening
             ? "border-emerald-600 text-emerald-700 dark:text-emerald-300 animate-pulse"
             : "border-emerald-200 text-emerald-800 hover:shadow-emerald-200 hover:shadow-xl dark:text-slate-100"
@@ -473,12 +474,14 @@ function App() {
         </span>
       </button>
 
-      {/* Floating Status Box at bottom left beside mic */}
-      <div className="fixed bottom-14 left-8 z-50 w-56 max-w-[80vw] rounded-lg p-3 border border-gray-200 bg-white shadow-lg dark:border-slate-700 dark:bg-slate-800 flex items-center justify-center">
-        <p className="text-xs text-gray-800 dark:text-slate-200 text-center truncate">
-          {status ? status : "Status: Idle"}
-        </p>
-      </div>
+      {/* Floating Status Box at middle left, only visible if status is not idle */}
+      {(status && status !== "Status: Idle") && (
+        <div className="fixed top-1/2 left-4 -translate-y-1/2 z-50 w-64 max-w-[90vw] rounded-lg p-3 border border-gray-200 bg-white shadow-lg dark:border-slate-700 dark:bg-slate-800 flex items-center justify-center">
+          <p className="text-xs text-gray-800 dark:text-slate-200 text-center truncate">
+            {status}
+          </p>
+        </div>
+      )}
 
       {/* Toasts */}
       <ToastStack
